@@ -1,9 +1,11 @@
 name: Greet Everyone
 
-on:
-  schedule:
-    #- cron:  '0 */12 * * *'
-    - cron:  '* * * * *'
+#on:
+#  schedule:
+#    #- cron:  '0 */12 * * *'
+#    - cron:  '* * * * *'
+
+on: [push]
 
 jobs:
   build:

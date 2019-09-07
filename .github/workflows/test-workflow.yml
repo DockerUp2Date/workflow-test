@@ -1,4 +1,4 @@
-name: Greet Everyone
+name: Hello World
 
 #on:
 #  schedule:
@@ -8,11 +8,8 @@ name: Greet Everyone
 on: [push]
 
 jobs:
-  build:
-    # Job name is Greeting
-    name: Greeting
-    # This job runs on Linux
+  one:
+    name: Hello
     runs-on: alpine-latest
     steps:
-      # This step prints the time.
-      - run: echo The time was ${{ steps.hello.outputs.time }}
+      - run: echo "hello world"

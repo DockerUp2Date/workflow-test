@@ -1,0 +1,22 @@
+name: Greet Everyone
+
+on:
+  schedule:
+    #- cron:  '0 */12 * * *'
+    - cron:  '* * * * *'
+
+jobs:
+  build:
+    # Job name is Greeting
+    name: Greeting
+    # This job runs on Linux
+    runs-on: alpine-latest
+    steps:
+      - uses: actions/checkout@v1
+      # This step uses the hello-world-action stored in this workflow's repository.
+      - uses: ./hello-world-action
+        with:
+          who-to-greet: Octocat
+        id: hello
+      # This step prints the time.
+      - run: echo The time was ${{ steps.hello.outputs.time }}

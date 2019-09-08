@@ -10,6 +10,6 @@ on: [push]
 jobs:
   one:
     name: Hello
-    runs-on: alpine-latest
+    runs-on: ubuntu-latest
     steps:
       - run: echo "hello world"

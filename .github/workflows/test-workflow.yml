@@ -1,11 +1,11 @@
 name: Hello World
 
-on:
-  schedule:
-    #- cron:  '0 */12 * * *'
-    - cron:  '* * * * *'
+#on:
+#  schedule:
+#    #- cron:  '0 */12 * * *'
+#    - cron:  '* * * * *'
 
-#on: [push]
+on: [push]
 
 jobs:
   one:

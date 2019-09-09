@@ -12,4 +12,14 @@ jobs:
     name: Hello
     runs-on: ubuntu-latest
     steps:
-      - run: echo "hello world"
+      - uses: actions/checkout@master
+      - name: Hello World
+        env: 
+          DEPLOY_KEY: ${{ secrets.GITHUB_KEY }}
+        run: |
+          eval $(ssh-agent)
+          ssh-add - <<< "${DEPLOY_KEY}"
+          git config user.name "T-vK"
+          git config user.email "t-vk@users.noreply.github.com"
+          git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"
+          git tag 1.0 && git push --tags

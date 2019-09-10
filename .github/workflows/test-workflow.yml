@@ -1,11 +1,12 @@
 name: Hello World
 
-#on:
-#  schedule:
-#    #- cron:  '0 */12 * * *'
-#    - cron:  '* * * * *'
+on:
+  push:
+  schedule:
+    #- cron:  '0 */12 * * *'
+    - cron:  '* * * * *'
 
-on: [push]
+#on: [push]
 
 jobs:
   one:
@@ -13,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      #- uses: actions/docker/cli@master
       - name: Hello
         run: |
           mkdir -p ~/.ssh
@@ -33,6 +33,6 @@ jobs:
               git tag "$LATEST_PACKAGE_VERSION"
               git tag --list
               git push --tags
-              # docker login ...
-              # docker push "dockerup2date/tor:${LATEST_PACKAGE_VERSION}"
+              docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+              docker push "dockerup2date/tor:${LATEST_PACKAGE_VERSION}"
           fi

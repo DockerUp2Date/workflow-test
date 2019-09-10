@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Hello World
+      - name: Hello
         env: 
           DEPLOY_KEY: ${{ secrets.GITHUB_KEY }}
         run: |

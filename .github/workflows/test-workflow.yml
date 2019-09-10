@@ -25,9 +25,12 @@ jobs:
           git config user.name "T-vK"
           echo '# git config user.email "t-vk@users.noreply.github.com"'
           git config user.email "t-vk@users.noreply.github.com"
+          echo "Generated repo URL: git@github.com:${GITHUB_REPOSITORY}.git"
           echo '# git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"'
           git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"
           echo '# git tag 1.0'
           git tag 1.0
+          echo '# git tag --list'
+          git tag --list
           echo '# git push --tags'
           git push --tags

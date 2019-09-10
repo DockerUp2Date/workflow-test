@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - uses: actions/docker/cli@master
       - name: Hello
         run: |
           mkdir -p ~/.ssh
@@ -22,8 +23,14 @@ jobs:
           ssh-add - <<< "${{ secrets.GITHUB_KEY }}"
           git config user.name "T-vK"
           git config user.email "t-vk@users.noreply.github.com"
-          echo "Generated repo URL: git@github.com:${GITHUB_REPOSITORY}.git"
           git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"
-          git tag 1.0
-          git tag --list
-          git push --tags
+          export LATEST_PACKAGE_VERSION=$(docker exec -ti alpine:latest sh -c "apk info tor --description | grep 'tor-' | cut -d ' ' -f1 | cut -d '-' -f2-")
+          export CURRENT_TAG=$(git tag --points-at ${GITHUB_SHA})
+          if [ "$LATEST_PACKAGE_VERSION" != "$CURRENT_TAG" ] ; then
+              docker build . -t "dockerup2date/tor:${LATEST_PACKAGE_VERSION}"
+              git tag "$LATEST_PACKAGE_VERSION"
+              git tag --list
+              git push --tags
+              # docker login ...
+              # docker push "dockerup2date/tor:${LATEST_PACKAGE_VERSION}"
+          fi

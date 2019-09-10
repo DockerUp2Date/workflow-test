@@ -24,6 +24,7 @@ jobs:
           git config user.name "T-vK"
           git config user.email "t-vk@users.noreply.github.com"
           git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"
+          docker pull alpine:latest
           export LATEST_PACKAGE_VERSION=$(docker exec -ti alpine:latest sh -c "apk info tor --description | grep 'tor-' | cut -d ' ' -f1 | cut -d '-' -f2-")
           export CURRENT_TAG=$(git tag --points-at ${GITHUB_SHA})
           if [ "$LATEST_PACKAGE_VERSION" != "$CURRENT_TAG" ] ; then

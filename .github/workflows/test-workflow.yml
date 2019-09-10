@@ -25,11 +25,13 @@ jobs:
           git config user.email "t-vk@users.noreply.github.com"
           git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"
           # docker pull alpine:latest
-          export LATEST_PACKAGE_VERSION=$(docker run -ti alpine:latest sh -c "apk info tor --description | grep 'tor-' | cut -d ' ' -f1 | cut -d '-' -f2-")
+          docker run -ti alpine:latest echo "test123456"
+          export LATEST_PACKAGE_VERSION=$(docker run -ti alpine:latest sh -c "apk update && apk info tor --description | grep 'tor-' | cut -d ' ' -f1 | cut -d '-' -f2-")
+          echo "LATEST_PACKAGE_VERSION: $LATEST_PACKAGE_VERSION"
           export CURRENT_TAG=$(git tag --points-at ${GITHUB_SHA})
           if [ "$LATEST_PACKAGE_VERSION" != "$CURRENT_TAG" ] ; then
               docker build . -t "dockerup2date/tor:${LATEST_PACKAGE_VERSION}"
-              git tag "$LATEST_PACKAGE_VERSION"
+              git tag "$LATEST_PACKAGE_VERSION" || (git tag "$LATEST_PACKAGE_VERSION" "$CURRENT_TAG" && git tag -d "$CURRENT_TAG")
               git tag --list
               git push --tags
               # docker login ...

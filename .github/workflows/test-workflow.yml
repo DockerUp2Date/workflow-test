@@ -26,6 +26,8 @@ jobs:
           git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"
           export LATEST_PACKAGE_VERSION=$(docker run alpine:latest sh -c "apk update -q && apk info tor --description | grep 'tor-' | cut -d ' ' -f1 | cut -d '-' -f2-")
           export CURRENT_TAG=$(git tag --points-at ${GITHUB_SHA})
+          git tag -d "1.0"
+          git tag -d "$CURRENT_TAG"
           if [ "$LATEST_PACKAGE_VERSION" != "$CURRENT_TAG" ] ; then
               docker build . -t "dockerup2date/tor:${LATEST_PACKAGE_VERSION}"
               if [ "$CURRENT_TAG" == "" ] ; then

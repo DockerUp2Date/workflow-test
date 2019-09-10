@@ -14,23 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Hello
-        env: 
-          GITHUB_KEY: ${{ secrets.GITHUB_KEY }}
         run: |
-          echo '# $(ssh-agent)'
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-agent -a "/tmp/ssh_agent.sock" > /dev/null
           eval $(ssh-agent)
-          echo '# ssh-add - <<< "${GITHUB_KEY}"'
-          ssh-add - <<< "${GITHUB_KEY}"
-          echo '# git config user.name "T-vK"'
+          ssh-add - <<< "${{ secrets.GITHUB_KEY }}"
           git config user.name "T-vK"
-          echo '# git config user.email "t-vk@users.noreply.github.com"'
           git config user.email "t-vk@users.noreply.github.com"
           echo "Generated repo URL: git@github.com:${GITHUB_REPOSITORY}.git"
-          echo '# git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"'
           git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"
-          echo '# git tag 1.0'
           git tag 1.0
-          echo '# git tag --list'
           git tag --list
-          echo '# git push --tags'
           git push --tags

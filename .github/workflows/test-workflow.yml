@@ -33,6 +33,6 @@ jobs:
               git tag "$LATEST_PACKAGE_VERSION"
               git tag --list
               git push --tags
-              docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+              docker login --username "${DOCKER_USERNAME}" --password "${DOCKER_PASSWORD}"
               docker push "dockerup2date/tor:${LATEST_PACKAGE_VERSION}"
           fi

@@ -2,9 +2,9 @@ name: Hello World
 
 on:
   push:
-  schedule:
+  #schedule:
     #- cron:  '0 */12 * * *'
-    - cron:  '* * * * *'
+    #- cron:  '* * * * *'
 
 #on: [push]
 

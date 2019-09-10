@@ -5,7 +5,7 @@ on:
     #- cron:  '0 */12 * * *'
     - cron:  '* * * * *'
 
-on: [push]
+#on: [push]
 
 jobs:
   one:

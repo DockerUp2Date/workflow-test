@@ -28,8 +28,8 @@ jobs:
           export CURRENT_TAG=$(git tag --points-at ${GITHUB_SHA})
           if [ "$LATEST_PACKAGE_VERSION" != "$CURRENT_TAG" ] ; then
               docker build . -t "dockerup2date/tor:${LATEST_PACKAGE_VERSION}"
-              git tag -l | xargs -n 1 git push --delete origin
-              git tag | xargs git tag -d
+              git tag -l | xargs -n 1 git push --delete origin || :
+              git tag | xargs git tag -d || :
               git tag "$LATEST_PACKAGE_VERSION"
               git tag --list
               git push --tags
